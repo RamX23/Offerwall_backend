@@ -31,22 +31,16 @@ app.get('/', (req, res) => {
 });
 
 // This is the endpoint to handle postback requests
-app.get('/postback/conversion', (req, res) => {
-  // Extract the 'subid' from the query parameters
-  const { subid } = req.query;
+app.post('/postback/conversion', (req, res) => {
+    // Log the received postback data
+    console.log('Received postback:', req.body);
+    
+    const subid = req.body.subid;
+    const offerid = req.body.offerid;
+    const virtualCurrency = req.body.virtual_currency;
 
-  // Check if 'subid' is present
-  if (!subid) {
-      return res.status(400).send('Missing subid');
-  }
-
-  // For demonstration, just log the subid
-  console.log(`Postback received for user with subid: ${subid}`);
-  
-  // Process the conversion logic here (e.g., update database, log conversion, etc.)
-
-  // Respond with a success message (as required by CPAlead or similar networks)
-  res.status(200).send('OK');
+    // Respond with success
+    res.status(200).send('Postback received successfully');
 });
 
 
