@@ -30,23 +30,25 @@ app.get('/', (req, res) => {
   res.send("Hey, Welcome to Server!");
 });
 
-// This is the endpoint to handle postback requests
-app.get('/postback/conversion', (req, res) => {
-      console.log(req.query);
+app.get('/postback', async (req, res) => {
+  const { subid, amount, offer_id, status } = req.query;
 
-    // Example of accessing a specific query parameter
-    const subid = req.query.subid;  // subid is expected in the URL query string
-    const offerid = req.query.offerid;
-    const virtualCurrency = req.query.virtual_currency;
+  // Validate required parameters
+  if (!subid || !amount || !offer_id || !status) {
+    console.error('Missing parameters in postback');
+    return res.status(400).send('Missing required parameters');
+  }
 
-    // Do your postback handling logic here
-    if (subid) {
-        // Update the user data in your database, etc.
-        res.status(200).send(`Postback received for subid: ${subid}`);
-    } else {
-        res.status(400).send('Missing subid');
-    }
+  try {
+    // Log the request for debugging
+    console.log(`Postback received:`, req.query);
+    res.status(200).send('Postback received successfully');
+  } catch (error) {
+    console.error('Error processing postback:', error);
+    res.status(500).send('Internal server error');
+  }
 });
+
 
 
 
