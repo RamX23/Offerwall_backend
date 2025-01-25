@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
 });
 
 // This is the endpoint to handle postback requests
-app.post('/postback/conversion', (req, res) => {
+app.get('/postback/conversion', (req, res) => {
     // Log the received postback data
     console.log('Received postback:', req.body);
     
