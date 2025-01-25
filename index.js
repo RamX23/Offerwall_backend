@@ -32,15 +32,20 @@ app.get('/', (req, res) => {
 
 // This is the endpoint to handle postback requests
 app.get('/postback/conversion', (req, res) => {
-    // Log the received postback data
-    console.log('Received postback:', req.body);
-    
-    const subid = req.body.subid;
-    const offerid = req.body.offerid;
-    const virtualCurrency = req.body.virtual_currency;
+      console.log(req.query);
 
-    // Respond with success
-    res.status(200).send('Postback received successfully');
+    // Example of accessing a specific query parameter
+    const subid = req.query.subid;  // subid is expected in the URL query string
+    const offerid = req.query.offerid;
+    const virtualCurrency = req.query.virtual_currency;
+
+    // Do your postback handling logic here
+    if (subid) {
+        // Update the user data in your database, etc.
+        res.status(200).send(`Postback received for subid: ${subid}`);
+    } else {
+        res.status(400).send('Missing subid');
+    }
 });
 
 
